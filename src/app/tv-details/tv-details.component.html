@@ -13,12 +13,12 @@
           <!-- Transparent Background -->
           <div class="ui-trans clearfix">
             <!-- Image -->
-            <img [src]="base_path + selectedtv.poster_path" alt="" class="img-responsive" />
+            <img [src]="this.base_path + selectedtv.poster_path" alt="" class="img-responsive" />
             <!-- Details -->
             <div class="ui-details clearfix">
               <!-- Movie Name -->
               <h2>
-                <a href="#">{{ selectedtv.original_title }}</a>
+                <a href="#">{{ selectedtv.original_name }}</a>
               </h2>
               <!-- Labels -->
               <!-- Paragraph -->
@@ -32,7 +32,7 @@
         <!-- Review -->
         <div class="ui-review">
           <!-- Heading -->
-          <h3>{{ selectedtv.original_title }}</h3>
+          <h3>{{ selectedtv.original_name }}</h3>
           <!-- Paragraph -->
           <p>
             {{ selectedtv.overview }}
