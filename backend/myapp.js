@@ -2,13 +2,12 @@ const express = require('express');
 const app = express();
 const mongo = require('mongoose');
 const Product = require('./models/product');
+const cors = require('cors');
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-app.listen(4000, () => {
-    console.log('server connected');
-});
+app.use(cors());
 
 mongo.connect('mongodb+srv://dstr1:1357902468@mmagdydb.otulj0s.mongodb.net/ecommerce')
     .then(() => {
@@ -18,10 +17,37 @@ mongo.connect('mongodb+srv://dstr1:1357902468@mmagdydb.otulj0s.mongodb.net/ecomm
         console.log('error connecting to DB!');
 });
 
+function getHello(req, res, next) {
+    console.log("hello from get");
+    next();
+}
+function sayHello(req, res, next) {
+    console.log("hello from say");
+    next();
+}
+
+// localhost:4000/products?pageNumber=2&pageSize=5
 app.get('/products', (req, res) => {
-    Product.find()
+    const pageNumber = +req.query.pageNumber;
+    const pageSize = +req.query.pageSize;
+    const myQuery = Product.find();
+    var fetchedProducts;
+
+    if (pageNumber && pageSize) {
+        myQuery.skip(pageSize* (pageNumber - 1)).limit(pageSize);
+    }
+
+    myQuery
         .then((foundProducts) => {
-            res.send(foundProducts);
+            //res.send(foundProducts);
+            fetchedProducts = foundProducts;
+            return Product.count();
+        })
+        .then((productsCount) => {
+            res.send({
+                totalProducts: productsCount,
+                products: fetchedProducts
+            });
         })
         .catch((err) => {
             res.send(err);
@@ -97,4 +123,10 @@ app.delete('/products/:id', (req, res) => {
     .catch((err) => {
         console.log(err);
     });
+});
+// app.use(getHello);
+// app.use(sayHello);
+
+app.listen(4000, () => {
+    console.log('server connected');
 });

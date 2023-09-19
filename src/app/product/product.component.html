@@ -1,0 +1,32 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+
+        <!-- movie card -->
+        <div class="card movie_card" *ngFor="let product of allProducts">
+            <a [routerLink]="['/product', product.id]">
+                <img [src]="product.image" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">{{product.title}}</h5>
+                <p class="movie_info">{{product.price}}</p>
+                <span class="movie_info float-right"><i class="fas fa-star"></i>{{product.vote_average}}</span>
+                <p *ngIf="product.showDetails">{{product.description}}</p>
+                <button class="btn btn-success d-block m-1" [disabled]="watchProp">watch</button>
+                <button class="btn btn-warning d-block m-1" (click)="toggleDetails(product.id)">
+                    {{product.showDetails? 'Hide': 'See'}} Details
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container my-5">
+    <mat-paginator [length]="totalProducts"
+              [pageSize]="productsPerPage"
+              [pageSizeOptions]="[5, 10, 20]"
+              aria-label="Select page"
+              (page)="changePage($event)">
+    </mat-paginator>
+  </div>
+  

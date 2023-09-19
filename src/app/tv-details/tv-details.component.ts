@@ -16,7 +16,7 @@ export class TvDetailsComponent implements OnInit {
     }
     ngOnInit(): void {
         let id = parseInt(this.route.snapshot.paramMap.get('id')!);
-        this.selectedtv = this.tvServe.getTvById(id, "en-US").subscribe({
+        this.tvServe.getTvById(id, "en-US").subscribe({
             next: (response) => {
                 this.selectedtv = response;
             }

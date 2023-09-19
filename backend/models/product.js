@@ -4,8 +4,13 @@ var productSchema = mongo.Schema({
     id: Number,
     title: String,
     price: Number,
+    description: String,
+    category: String,
     image: String,
-    isAvailable: Boolean
+    rating: {
+        rate: String,
+        count: Number
+    }
 });
 
 module.exports = mongo.model('Product', productSchema);
