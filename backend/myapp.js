@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.use(cors());
 
-mongo.connect('mongodb+srv://dstr1:1357902468@mmagdydb.otulj0s.mongodb.net/ecommerce')
+mongo.connect('mongodb+srv://<username>:<password>@mmagdydb.otulj0s.mongodb.net/ecommerce')
     .then(() => {
         console.log('connected to DB!');
     })
